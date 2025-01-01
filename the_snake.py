@@ -123,9 +123,12 @@ class Snake(GameObject):
 class Apple(GameObject):
     """Класс, представляющий яблоко в игре."""
 
-    def __init__(self, snake):
+    def __init__(self, snake=None):
         super().__init__((0, 0))  # Инициализация позиции
-        self.snake = snake
+        if snake is None:
+            self.snake = Snake()  # Создаем новый объект Snake, если не передан
+        else:
+            self.snake = snake  # Используем переданный объект Snake
         self.body_color = APPLE_COLOR
         self.randomize_position()
 
