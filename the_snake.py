@@ -118,7 +118,7 @@ class Snake(GameObject):
 
     def move(self):
         """Метод для перемещения змейки."""
-        self.update()  # Можно использовать update для перемещения
+        self.update()
 
     def reset(self):
         """Сброс змейки до начального состояния."""
