@@ -63,8 +63,8 @@ class Snake(GameObject):
         new_head = (new_head_x, new_head_y)
 
         # Проверка на выход за границы
-        if (new_head_x < 0 or new_head_x >= GRID_WIDTH or
-                new_head_y < 0 or new_head_y >= GRID_HEIGHT):
+        if (new_head_x < 0 or new_head_x >= GRID_WIDTH
+                or new_head_y < 0 or new_head_y >= GRID_HEIGHT):
             print("Game Over! You hit the wall.")
             pygame.quit()
             raise SystemExit
