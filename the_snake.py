@@ -37,7 +37,7 @@ class GameObject:
 
     def draw(self):
         """Метод для отрисовки объекта."""
-        raise NotImplementedError("Дочерние классы должны реализовать этот метод.")
+        raise NotImplementedError("Дочерние классы должны реализовать метод.")
 
 
 class Snake(GameObject):
@@ -121,7 +121,7 @@ class Snake(GameObject):
         self.update()  # Можно использовать update для перемещения
 
     def reset(self):
-        """Сброс змейки до начального состояния (дополнительно, если требуется)."""
+        """Сброс змейки до начального состояния."""
         self.positions = [self.position]
         self.direction = RIGHT
         self.grow = False
