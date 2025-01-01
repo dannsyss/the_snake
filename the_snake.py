@@ -72,6 +72,10 @@ class Snake:
     def grow_snake(self):
         self.grow = True
 
+    def check_collision_with_tail(self):
+        # Проверка столкновения головы с хвостом
+        return self.positions[0] in self.positions[1:]
+
 
 class Apple:
     def __init__(self):
@@ -100,6 +104,12 @@ def main():
         if snake.positions[0] == apple.position:
             snake.grow_snake()
             apple.spawn()
+
+        # Проверка на столкновение с хвостом
+        if snake.check_collision_with_tail():
+            print("Game Over! You collided with your tail.")
+            pygame.quit()
+            raise SystemExit
 
         # Отрисовка
         screen.fill(BOARD_BACKGROUND_COLOR)
