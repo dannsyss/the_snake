@@ -56,8 +56,9 @@ class Snake(GameObject):
             self.direction = self.next_direction
             self.next_direction = None
 
-        new_head = (self.positions[0][0] + self.direction[0],
-                    self.positions[0][1] + self.direction[1])
+        new_head_x = self.positions[0][0] + self.direction[0]
+        new_head_y = self.positions[0][1] + self.direction[1]
+        new_head = (new_head_x, new_head_y)
         self.positions.insert(0, new_head)
 
         if not self.grow:
@@ -68,8 +69,12 @@ class Snake(GameObject):
     def draw(self):
         """Отрисовка змейки на экране."""
         for position in self.positions:
-            rect = pygame.Rect(position[0] * GRID_SIZE,
-                               position[1] * GRID_SIZE, GRID_SIZE, GRID_SIZE)
+            rect = pygame.Rect(
+                position[0] * GRID_SIZE,
+                position[1] * GRID_SIZE,
+                GRID_SIZE,
+                GRID_SIZE
+            )
             pygame.draw.rect(screen, SNAKE_COLOR, rect)
             pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
 
@@ -111,8 +116,12 @@ class Apple(GameObject):
 
     def draw(self):
         """Отрисовка яблока на экране."""
-        rect = pygame.Rect(self.position[0] * GRID_SIZE,
-                           self.position[1] * GRID_SIZE, GRID_SIZE, GRID_SIZE)
+        rect = pygame.Rect(
+            self.position[0] * GRID_SIZE,
+            self.position[1] * GRID_SIZE,
+            GRID_SIZE,
+            GRID_SIZE
+        )
         pygame.draw.rect(screen, APPLE_COLOR, rect)
         pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
 
