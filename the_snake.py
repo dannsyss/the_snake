@@ -23,6 +23,7 @@ SNAKE_COLOR = (0, 255, 0)
 SPEED = 10
 
 # Настройка игрового окна:
+pygame.init()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
 pygame.display.set_caption('Змейка')
 clock = pygame.time.Clock()
@@ -36,8 +37,7 @@ class GameObject:
 
     def draw(self):
         """Метод для отрисовки объекта."""
-        raise NotImplementedError("Дочерние классы должны реализовать "
-                                  "этот метод.")
+        raise NotImplementedError("Дочерние классы должны реализовать этот метод.")
 
 
 class Snake(GameObject):
@@ -60,6 +60,13 @@ class Snake(GameObject):
         new_head_x = self.positions[0][0] + self.direction[0]
         new_head_y = self.positions[0][1] + self.direction[1]
         new_head = (new_head_x, new_head_y)
+
+        # Проверка на выход за границы
+        if new_head_x < 0 or new_head_x >= GRID_WIDTH or new_head_y < 0 or new_head_y >= GRID_HEIGHT:
+            print("Game Over! You hit the wall.")
+            pygame.quit()
+            raise SystemExit
+
         self.positions.insert(0, new_head)
 
         if not self.grow:
@@ -138,7 +145,6 @@ class Apple(GameObject):
 
 def main():
     """Основная функция игры."""
-    pygame.init()
     snake = Snake()
     apple = Apple(snake)
 
