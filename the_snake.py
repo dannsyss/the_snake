@@ -37,8 +37,7 @@ class GameObject:
 
     def draw(self):
         """Метод для отрисовки объекта."""
-        raise NotImplementedError("Дочерние классы должны "
-                                  "реализовать этот метод.")
+        raise NotImplementedError("Дочерние классы должны реализовать этот метод.")
 
 
 class Snake(GameObject):
@@ -51,6 +50,7 @@ class Snake(GameObject):
         self.direction = RIGHT
         self.next_direction = None
         self.grow = False
+        self.body_color = SNAKE_COLOR  # Добавление атрибута body_color
 
     def update(self):
         """Обновление позиции змейки на основе текущего направления."""
@@ -85,7 +85,7 @@ class Snake(GameObject):
                 GRID_SIZE,
                 GRID_SIZE
             )
-            pygame.draw.rect(screen, SNAKE_COLOR, rect)
+            pygame.draw.rect(screen, self.body_color, rect)
             pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
 
     def handle_keys(self):
@@ -116,6 +116,21 @@ class Snake(GameObject):
         """Получение позиции головы змейки."""
         return self.positions[0]
 
+    def move(self):
+        """Метод для перемещения змейки (дополнительно, если требуется)."""
+        self.update()  # Можно использовать update для перемещения
+
+    def reset(self):
+        """Сброс змейки до начального состояния (дополнительно, если требуется)."""
+        self.positions = [self.position]
+        self.direction = RIGHT
+        self.grow = False
+
+    def update_direction(self, new_direction):
+        """Обновление направления змейки (дополнительно, если требуется)."""
+        if new_direction in (UP, DOWN, LEFT, RIGHT):
+            self.next_direction = new_direction
+
 
 class Apple(GameObject):
     """Класс, представляющий яблоко в игре."""
@@ -123,6 +138,7 @@ class Apple(GameObject):
     def __init__(self, snake):
         """Инициализация яблока с случайной позицией."""
         self.snake = snake
+        self.position = (0, 0)  # Инициализация позиции
         self.randomize_position()
 
     def randomize_position(self):
