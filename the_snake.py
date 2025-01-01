@@ -28,12 +28,24 @@ pygame.display.set_caption('Змейка')
 clock = pygame.time.Clock()
 
 
-class Snake:
+class GameObject:
+    """Базовый класс для всех игровых объектов."""
+
+    def __init__(self, position):
+        self.position = position
+
+    def draw(self):
+        """Метод для отрисовки объекта. Должен быть переопределён в дочерних классах."""
+        raise NotImplementedError("Дочерние классы должны реализовать этот метод.")
+
+
+class Snake(GameObject):
     """Класс, представляющий змейку в игре."""
 
     def __init__(self):
         """Инициализация змейки с начальной позицией и направлением."""
-        self.positions = [(GRID_WIDTH // 2, GRID_HEIGHT // 2)]
+        super().__init__((GRID_WIDTH // 2, GRID_HEIGHT // 2))
+        self.positions = [self.position]
         self.direction = RIGHT
         self.next_direction = None
         self.grow = False
@@ -86,18 +98,16 @@ class Snake:
         return self.positions[0] in self.positions[1:]
 
 
-class Apple:
+class Apple(GameObject):
     """Класс, представляющий яблоко в игре."""
 
     def __init__(self):
         """Инициализация яблока с случайной позицией."""
-        self.position = (choice(range(GRID_WIDTH)),
-                         choice(range(GRID_HEIGHT)))
+        super().__init__((choice(range(GRID_WIDTH)), choice(range(GRID_HEIGHT))))
 
     def spawn(self):
         """Перемещение яблока на новую случайную позицию."""
-        self.position = (choice(range(GRID_WIDTH)),
-                         choice(range(GRID_HEIGHT)))
+        self.position = (choice(range(GRID_WIDTH)), choice(range(GRID_HEIGHT)))
 
     def draw(self):
         """Отрисовка яблока на экране."""
