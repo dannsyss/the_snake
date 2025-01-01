@@ -34,7 +34,7 @@ class GameObject:
 
     def draw(self):
         """Метод для отрисовки объекта."""
-        raise NotImplementedError("Дочерние классы должны реализовать этот метод.")
+        raise NotImplementedError("Дочерние классы должны реализовать метод.")
 
 
 class Snake(GameObject):
@@ -59,8 +59,8 @@ class Snake(GameObject):
         new_head = (new_head_x, new_head_y)
 
         # Проверка на выход за границы
-        if (new_head_x < 0 or new_head_x >= GRID_WIDTH or
-                new_head_y < 0 or new_head_y >= GRID_HEIGHT):
+        if (new_head_x < 0 or new_head_x >= GRID_WIDTH or new_head_y < 0
+                or new_head_y >= GRID_HEIGHT):
             print("Game Over! You hit the wall.")
             pygame.quit()
             raise SystemExit
@@ -75,7 +75,8 @@ class Snake(GameObject):
     def draw(self):
         """Отрисовка змейки на экране."""
         for position in self.positions:
-            rect = pygame.Rect(position[0] * GRID_SIZE, position[1] * GRID_SIZE, GRID_SIZE, GRID_SIZE)
+            rect = pygame.Rect(position[0] * GRID_SIZE,
+                               position[1] * GRID_SIZE, GRID_SIZE, GRID_SIZE)
             pygame.draw.rect(screen, self.body_color, rect)
             pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
 
@@ -131,13 +132,15 @@ class Apple(GameObject):
     def randomize_position(self):
         """Перемещение яблока на позицию, не пересекающуюся со змеёй."""
         while True:
-            self.position = (random.randint(0, GRID_WIDTH - 1), random.randint(0, GRID_HEIGHT - 1))
+            self.position = (random.randint(0, GRID_WIDTH - 1),
+                             random.randint(0, GRID_HEIGHT - 1))
             if self.position not in self.snake.positions:
                 break
 
     def draw(self):
         """Отрисовка яблока на экране."""
-        rect = pygame.Rect(self.position[0] * GRID_SIZE, self.position[1] * GRID_SIZE, GRID_SIZE, GRID_SIZE)
+        rect = pygame.Rect(self.position[0] * GRID_SIZE,
+                           self.position[1] * GRID_SIZE, GRID_SIZE, GRID_SIZE)
         pygame.draw.rect(screen, self.body_color, rect)
         pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
 
