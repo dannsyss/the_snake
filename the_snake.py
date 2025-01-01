@@ -35,8 +35,9 @@ class GameObject:
         self.position = position
 
     def draw(self):
-        """Метод для отрисовки объекта. Должен быть переопределён в дочерних классах."""
-        raise NotImplementedError("Дочерние классы должны реализовать этот метод.")
+        """Метод для отрисовки объекта."""
+        raise NotImplementedError("Дочерние классы должны реализовать "
+                                  "этот метод.")
 
 
 class Snake(GameObject):
@@ -79,7 +80,7 @@ class Snake(GameObject):
             pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
 
     def handle_keys(self):
-        """Обработка нажатий клавиш для изменения направления движения."""
+        """Обработка нажатий клавиш для изменения направления."""
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -108,7 +109,8 @@ class Apple(GameObject):
 
     def __init__(self):
         """Инициализация яблока с случайной позицией."""
-        super().__init__((choice(range(GRID_WIDTH)), choice(range(GRID_HEIGHT))))
+        super().__init__((choice(range(GRID_WIDTH)),
+                          choice(range(GRID_HEIGHT))))
 
     def spawn(self):
         """Перемещение яблока на новую случайную позицию."""
