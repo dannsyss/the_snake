@@ -117,7 +117,7 @@ class Snake(GameObject):
         return self.positions[0]
 
     def move(self):
-        """Метод для перемещения змейки (дополнительно, если требуется)."""
+        """Метод для перемещения змейки."""
         self.update()  # Можно использовать update для перемещения
 
     def reset(self):
@@ -127,7 +127,7 @@ class Snake(GameObject):
         self.grow = False
 
     def update_direction(self, new_direction):
-        """Обновление направления змейки (дополнительно, если требуется)."""
+        """Обновление направления змейки."""
         if new_direction in (UP, DOWN, LEFT, RIGHT):
             self.next_direction = new_direction
 
@@ -137,8 +137,9 @@ class Apple(GameObject):
 
     def __init__(self, snake):
         """Инициализация яблока с случайной позицией."""
+        super().__init__((0, 0))  # Инициализация позиции
         self.snake = snake
-        self.position = (0, 0)  # Инициализация позиции
+        self.body_color = APPLE_COLOR  # Добавление атрибута body_color
         self.randomize_position()
 
     def randomize_position(self):
@@ -157,7 +158,7 @@ class Apple(GameObject):
             GRID_SIZE,
             GRID_SIZE
         )
-        pygame.draw.rect(screen, APPLE_COLOR, rect)
+        pygame.draw.rect(screen, self.body_color, rect)
         pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
 
 
