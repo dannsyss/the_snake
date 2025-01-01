@@ -117,10 +117,10 @@ class Apple(GameObject):
         self.randomize_position()
 
     def randomize_position(self):
-        """Перемещение яблока на случайную позицию, не п
-        ересекающуюся со змеёй."""
+        """Перемещение яблока на позицию, не пересекающуюся со змеёй."""
         while True:
-            self.position = (choice(range(GRID_WIDTH)), choice(range(GRID_HEIGHT)))
+            self.position = (choice(range(GRID_WIDTH)),
+                             choice(range(GRID_HEIGHT)))
             if self.position not in self.snake.positions:
                 break
 
