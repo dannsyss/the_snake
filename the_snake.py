@@ -103,18 +103,25 @@ class Snake(GameObject):
         """Проверка столкновения головы змейки с её хвостом."""
         return self.positions[0] in self.positions[1:]
 
+    def get_head_position(self):
+        """Получение позиции головы змейки."""
+        return self.positions[0]
+
 
 class Apple(GameObject):
     """Класс, представляющий яблоко в игре."""
 
-    def __init__(self):
+    def __init__(self, snake):
         """Инициализация яблока с случайной позицией."""
-        super().__init__((choice(range(GRID_WIDTH)),
-                          choice(range(GRID_HEIGHT))))
+        self.snake = snake
+        self.randomize_position()
 
-    def spawn(self):
-        """Перемещение яблока на новую случайную позицию."""
-        self.position = (choice(range(GRID_WIDTH)), choice(range(GRID_HEIGHT)))
+    def randomize_position(self):
+        """Перемещение яблока случайную позицию, не пересекающуюся со змеёй."""
+        while True:
+            self.position = (choice(range(GRID_WIDTH)), choice(range(GRID_HEIGHT)))
+            if self.position not in self.snake.positions:
+                break
 
     def draw(self):
         """Отрисовка яблока на экране."""
@@ -132,7 +139,7 @@ def main():
     """Основная функция игры."""
     pygame.init()
     snake = Snake()
-    apple = Apple()
+    apple = Apple(snake)
 
     while True:
         clock.tick(SPEED)
@@ -140,9 +147,9 @@ def main():
         snake.update()
 
         # Проверка на столкновение с яблоком
-        if snake.positions[0] == apple.position:
+        if snake.get_head_position() == apple.position:
             snake.grow_snake()
-            apple.spawn()
+            apple.randomize_position()
 
         # Проверка на столкновение с хвостом
         if snake.check_collision_with_tail():
